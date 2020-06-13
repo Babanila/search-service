@@ -7,5 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Babajide Williams <babanila@yahoo.com>",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "got": "^11.3.0",
+    "jest": "^26.0.1"
+  }
 }
