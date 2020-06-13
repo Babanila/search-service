@@ -1,0 +1,11 @@
+{
+  "name": "search-service",
+  "version": "1.0.0",
+  "description": "This provides a single API endpoint to search for GitHub users by specifying a programming language they use in their public repositories and a username string.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Babajide Williams <babanila@yahoo.com>",
+  "license": "ISC"
+}
