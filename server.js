@@ -1,36 +1,45 @@
 const express = require("express");
 const got = require("got");
+const { formatLanguages } = require("./src/helpers");
+
 const app = express();
+const PORT = 8080;
+const HOST = "0.0.0.0";
+
+app.get("/", (req, res) => res.send(`Please check the READ.me file`));
 
 app.get("/get-users", async (req, res) => {
   const { username, language } = req.query;
-  //   console.log("language", language);
-  const response = await got(
-    `https://api.github.com/search/users?q=${username}+in:login+language:${language}`
-  );
-
-  console.log(response);
-  //   if (!body) return [];
-
-  const { body } = response;
-  const rest = JSON.parse(body);
-  const formatted = rest.items
-    .map(({ login, avatar_url }) => {
+  const formatedLanguage = formatLanguages(language);
+  try {
+    const response = await got(
+      `https://api.github.com/search/users?q=${username}+in:login${formatedLanguage}`
+    );
+    const { body } = response;
+    if (!body || body.length === 0) {
+      res
+        .status(200)
+        .send(`No Github user with the programming language ${language}`);
+    }
+    const rest = JSON.parse(body);
+    const formatted = rest.items.map(({ login, avatar_url }) => {
       return got(`https://api.github.com/users/${login}`).then((user) => {
         const { followers, name } = JSON.parse(user.body);
         return { name, followers, avatar_url, username: login };
       });
-    })
-    .catch((e) => {
-      console.log("e", e);
-
-      throw e;
     });
-  const final = await Promise.all(formatted);
-  res.status(200).send(final);
+    const final = await Promise.all(formatted);
+    res.status(200).send(final);
+  } catch (error) {
+    if (error.name === "HTTPError") {
+      res.status(403).send("Rate limit exceeded");
+      res.status(500).send("Internal Server Error");
+    } else {
+      throw error;
+    }
+  }
 });
-const PORT = process.env.PORT || 3000;
-const HOST = process.env.HOST || "0.0.0.0";
+
 app.listen(PORT, HOST, () => {
   console.log(`Server running at http://${HOST}:${PORT}/`);
 });
