@@ -2,10 +2,12 @@
   "name": "search-service",
   "version": "1.0.0",
   "description": "This provides a single API endpoint to search for GitHub users by specifying a programming language they use in their public repositories and a username string.",
-  "main": "sever.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node sever.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js",
+    "build": "npm install",
+    "debug": "node $NODE_DEBUG_OPTION ./sever.js",
+    "test": "jest"
   },
   "author": "Babajide Williams <babanila@yahoo.com>",
   "license": "ISC",
@@ -13,5 +15,8 @@
     "express": "^4.17.1",
     "got": "^11.3.0",
     "jest": "^26.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
   }
 }

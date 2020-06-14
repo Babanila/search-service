@@ -1,20 +1,16 @@
 # Docker Setup File
-FROM node:12
+FROM node:12.13.0-alpine
 
 # Create app directory
-WORKDIR /usr/src/app
+WORKDIR /app
 
 # Copy dependencies
 COPY package*.json ./
 
 # Install dependencies
-RUN npm install -g nodemon
 RUN npm install
 
-# For production only
-# RUN npm ci --only=production
-
-# Copy source code
+# Bundle app source
 COPY . .
 
 # Expose API port to the outside
