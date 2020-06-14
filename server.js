@@ -1,6 +1,6 @@
 const express = require("express");
 const got = require("got");
-const { formatLanguages } = require("./src/helpers");
+const { formatLanguages, getUserDetails } = require("./src/helpers");
 
 const app = express();
 const PORT = 8080;
@@ -22,14 +22,14 @@ app.get("/get-users", async (req, res) => {
         .send(`No Github user with the programming language ${language}`);
     }
     const rest = JSON.parse(body);
-    const formatted = rest.items.map(({ login, avatar_url }) => {
-      return got(`https://api.github.com/users/${login}`).then((user) => {
-        const { followers, name } = JSON.parse(user.body);
-        return { name, followers, avatar_url, username: login };
-      });
-    });
-    const final = await Promise.all(formatted);
-    res.status(200).send(final);
+    const formatted = getUserDetails(
+      rest.items,
+      `https://api.github.com/users`
+    );
+
+    return Promise.all(formatted)
+      .then((final) => res.status(200).send(final))
+      .catch((_) => res.status(403).send("Rate Limit Exceeded"));
   } catch (error) {
     if (error.name === "HTTPError") {
       res.status(403).send("Rate limit exceeded");
