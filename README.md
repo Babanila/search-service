@@ -84,6 +84,12 @@ Search-Service is a backend service with a single API endpoint that return git u
 
   E.g `docker push babanila/node-search-app:latest`
 
+### To pull the docker image from [dockerhub](https://hub.docker.com/)
+
+- docker pull <docker_username>/node-search-app
+
+  E.g `docker pull babanila/node-search-app`
+
 ### To run docker image in container
 
 - docker run --publish 3000:8080 --detach --name <container name> <image name>
@@ -95,3 +101,9 @@ Search-Service is a backend service with a single API endpoint that return git u
 - Add the query parameters `(username and language)` to the url `localhost:3000/get-users`
 
   E.g `curl -i http://localhost:3000/get-users?username=babanila&language=javascript`
+
+### Note
+
+In other for this solution to be well tested considering the rate limitation imposed by Github API for usage without Basic Authentication or OAuth (`up to 5000 requests per hour`), the search result output can be limited to a certain number like 10, 20 etc.
+
+In the Controller.js file on line 62, can be changed to `searchResults.slice(0,10)`, for the first 10 search results.

@@ -1,4 +1,4 @@
-const { formatLanguages } = require("./utils");
+const { formatLanguages } = require("../src/utils");
 
 describe("Check formatLanguages", () => {
   it("should output a single language", () => {

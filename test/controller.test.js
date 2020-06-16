@@ -1,4 +1,4 @@
-const createController = require("./controller");
+const createController = require("../src/controller");
 
 describe.only("Get users", () => {
   let baseUrl, timeout, payload1, payload2, payload3;
