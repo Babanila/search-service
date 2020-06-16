@@ -107,3 +107,4 @@ Search-Service is a backend service with a single API endpoint that return git u
 In other for this solution to be well tested considering the rate limitation imposed by Github API for usage without Basic Authentication or OAuth (`up to 5000 requests per hour`), the search result output can be limited to a certain number like 10, 20 etc.
 
 In the Controller.js file on line 62, can be changed to `searchResults.slice(0,10)`, for the first 10 search results.
+
