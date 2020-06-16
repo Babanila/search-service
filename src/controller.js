@@ -59,7 +59,7 @@ module.exports = function createController(
       }
 
       const userDetails = await PromiseMap(
-        searchResults.slice(0, 4),
+        searchResults,
         async ({ login, avatar_url }) => {
           const { followers, name } = await fetcher(
             `${baseUrl}/users/${login}`,

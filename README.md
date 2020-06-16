@@ -94,4 +94,4 @@ Search-Service is a backend service with a single API endpoint that return git u
 
 - Add the query parameters `(username and language)` to the url `localhost:3000/get-users`
 
-  E.g `curl -i localhost:3000/get-users?username=babanila&language=javascript`
+  E.g `curl -i http://localhost:3000/get-users?username=babanila&language=javascript`
